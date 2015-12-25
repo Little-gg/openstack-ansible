@@ -32,5 +32,7 @@
 
 - include: horizon_apache.yml
 
+- include: horizon_vanecloud_ui.yml
+
 - name: Flush handlers
   meta: flush_handlers
