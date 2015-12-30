@@ -1,0 +1,49 @@
+- name: Create backup storage directory
+  file: 
+    path: /tmp/openstack_backup_{{ ansible_date_time.date }} 
+    state: directory 
+
+- name: Backup {{ item }} database
+  mysql_db:
+    name: cinder 
+    state: dump
+    target: /tmp/openstack_backup_{{ ansible_date_time.date }}/{{ item }}.sql
+  retries: 3
+  delay: 2
+  with_items:
+    - "{{ openstack_databases }}"
+  tags:
+    - openstack_backup
+
+- name: Transfer openstack topology files {{ item }} to remote
+  copy:
+    src: "{{ openstack_topology_dir }}/{{ item }}"
+    dest: /tmp/openstack_backup_{{ ansible_date_time.date }}
+  retries: 3
+  delay: 2
+  with_items:
+    - "{{ openstack_topology_files }}"
+
+- name: Pack openstack databases dumpfiles
+  shell: cd /tmp; tar zcf openstack_backup_{{ ansible_date_time.date }}.tgz openstack_backup_{{ ansible_date_time.date }} 
+  retries: 3
+  delay: 2
+
+- name: Transfer packed databases dumpfiles to local
+  fetch:
+    src: /tmp/openstack_backup_{{ ansible_date_time.date }}.tgz
+    dest: "{{ backup_root }}"
+    flat: yes
+    validate_checksum: no
+  retries: 3
+  delay: 2
+
+- name: Clean up temp files
+  file:
+    path: /tmp/openstack_backup_{{ ansible_date_time.date }}
+    state: absent
+
+- name: Clean up temp files
+  file:
+    path: /tmp/openstack_backup_{{ ansible_date_time.date }}.tgz
+    state: absent

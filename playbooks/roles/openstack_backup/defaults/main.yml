@@ -1,0 +1,21 @@
+openstack_databases:
+- cinder
+- dash
+- glance
+- heat
+- keystone
+- mysql
+- neutron
+- nova
+- performance_schema
+
+openstack_topology_files:
+- openstack_environment.yml
+- openstack_hostnames_ips.yml
+- openstack_inventory.json
+- openstack_user_config.yml
+- user_secrets.yml
+- user_variables.yml
+
+openstack_topology_dir: /etc/openstack_deploy
+backup_root: /tmp
