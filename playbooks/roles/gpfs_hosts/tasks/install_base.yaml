@@ -1,0 +1,27 @@
+---
+# Copyright 2016, CSHO
+# Author: Chen Guan Ji at vaneCloud.com
+
+- name: Create installation temporary directory
+  file:
+    path: "{{ temp_path }}"
+    state: directory
+
+- name: Copy GPFS base install fileset to remote
+  synchronize:
+    src: "gpfs_base/{{ item }}"
+    dest: "{{ temp_path }}"
+  with_items:
+    "{{ gpfs_base_fileset }}"
+
+- name: Install GPFS base packages
+  # do not use apt module to prevent bug: https://github.com/ansible/ansible/issues/7513
+  shell: dpkg -i "{{ temp_path }}/{{ item }}"
+  with_items:
+    "{{ gpfs_base_fileset }}"
+  ignore_errors: true
+
+- name: Remove temporary directory
+  file:
+    path: "{{ temp_path }}"
+    state: absent

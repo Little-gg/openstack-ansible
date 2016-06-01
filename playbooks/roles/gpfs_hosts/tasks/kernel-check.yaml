@@ -1,0 +1,13 @@
+---
+# Copyright 2016, CSHO
+# Author: Chen Guan Ji at vaneCloud.com
+
+- name: Check linux kernel requirement
+  shell: if [ $(uname -r) != {{ linux_kernel }} ]; then echo 'no_kernel'; else echo 'done'; fi
+  ignore_errors: true
+  register: kernel_hint
+
+- name: Install GPFS required linux kernel
+  fail:
+    msg: "Linux kernel level not meet. Please install the kernel version {{ linux_kernel }}"
+  when: kernel_hint.stdout.find("no_kernel") != -1

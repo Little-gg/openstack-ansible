@@ -1,0 +1,9 @@
+---
+# Copyright 2016, CSHO
+# Author: Chen Guan Ji at vaneCloud.com
+
+- name: Make GPFS Linux portability interface
+  shell: cd {{ gpfs_install_dir }}/src; make Autoconfig && make World && make InstallImages
+
+- name: Add GPFS command path
+  shell: echo PATH=$PATH:{{ gpfs_install_dir }}/bin >> /etc/profile

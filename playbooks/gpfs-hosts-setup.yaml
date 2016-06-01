@@ -1,0 +1,10 @@
+---
+# Copyright 2016, CSHO
+# Author: Chen Guan Ji at vaneCloud.com
+
+- name: Basic host setup
+  hosts: "{{ host_group|default('hosts') }}"
+  user: root
+  max_fail_percentage: 20
+  roles:
+    - { role: "gpfs_hosts", tags: [ "gpfs-hosts-setup" ] }

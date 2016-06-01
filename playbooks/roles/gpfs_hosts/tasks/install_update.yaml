@@ -1,0 +1,26 @@
+---
+# Copyright 2016, CSHO
+# Author: Chen Guan Ji at vaneCloud.com
+
+- name: Create update temporary directory
+  file:
+    path: "{{ temp_path }}"
+    state: directory
+
+- name: Copy GPFS update fileset to remote
+  synchronize:
+    src: "gpfs_update/{{ item }}"
+    dest: "{{ temp_path }}"
+  with_items:
+    "{{ gpfs_update_fileset }}"
+
+- name: Install GPFS update packages
+  shell: dpkg -i "{{ temp_path }}/{{ item }}"
+  with_items:
+    "{{ gpfs_update_fileset }}"
+  ignore_errors: true
+
+- name: Remove update temporary directory
+  file:
+    path: "{{ temp_path }}"
+    state: absent

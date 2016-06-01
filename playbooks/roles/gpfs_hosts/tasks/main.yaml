@@ -1,0 +1,5 @@
+- include: kernel-check.yaml
+- include: required_packages.yaml
+- include: install_base.yaml
+- include: install_update.yaml
+- include: install_gpfs.yaml

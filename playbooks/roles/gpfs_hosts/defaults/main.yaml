@@ -1,0 +1,22 @@
+linux_kernel: 3.16.0-30-generic
+temp_path: /tmp/vanecloud
+base_packages:
+  - ksh
+  - m4
+  - libaio1
+  - gcc
+gpfs_base_fileset:
+  - gpfs.base_4.1.0-0_amd64.deb
+  - gpfs.docs_4.1.0-0_all.deb
+  - gpfs.ext_4.1.0-0_amd64.deb
+  - gpfs.gpl_4.1.0-0_all.deb
+  - gpfs.gskit_8.0.50-16_amd64.deb
+  - gpfs.msg.en-us_4.1.0-0_all.deb
+gpfs_update_fileset:
+  - gpfs.base_4.1.0-8_amd64_update.deb
+  - gpfs.docs_4.1.0-8_all.deb
+  - gpfs.ext_4.1.0-8_amd64_update.deb
+  - gpfs.gpl_4.1.0-8_all.deb
+  - gpfs.gskit_8.0.50-32_amd64.deb
+  - gpfs.msg.en-us_4.1.0-8_all.deb
+gpfs_install_dir: /usr/lpp/mmfs

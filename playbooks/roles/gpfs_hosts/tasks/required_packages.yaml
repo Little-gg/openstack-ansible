@@ -1,0 +1,11 @@
+---
+# Copyright 2016, CSHO
+# Author: Chen Guan Ji at vaneCloud.com
+
+- name: Ensure GPFS required packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ base_packages }}"
+  tags:
+    - required_packages
