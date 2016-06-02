@@ -60,3 +60,14 @@
   tags:
     - horizon-configs
     - horizon-static-collect
+
+- name: Compile messages
+  shell: cd "{{ horizon_lib_dir }}/{{ item }}"; horizon-manage.py compilemessages
+  sudo: yes
+  sudo_user: "{{ horizon_system_user_name }}"
+  with_items:
+    - openstack_dashboard
+    - horizon
+  tags:
+    - horizon-configs
+    - horizon-compile-messages
